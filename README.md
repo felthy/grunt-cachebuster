@@ -67,7 +67,7 @@ Example `hashes` parameter:
 ```js
     {
       "path/to/filename1" : "fa6a5a3224d7da66d9e0bdec25f62cf0",
-      "path/to/filename2" : "5ba48b6e5a7c4d4930fda256f411e55b"}
+      "path/to/filename2" : "5ba48b6e5a7c4d4930fda256f411e55b"
     }
 ```
 
