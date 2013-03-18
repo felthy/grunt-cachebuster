@@ -90,6 +90,14 @@ module.exports = function(grunt) {
           }
         },
         src: ['test/fixtures/testing']
+      },
+      international: {
+        options: {
+          complete: function(hashes) {
+            grunt.file.write('tmp/international', JSON.stringify(hashes));
+          }
+        },
+        src: ['test/fixtures/international']
       }
     },
 

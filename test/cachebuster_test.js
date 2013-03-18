@@ -60,6 +60,13 @@ exports.cachebuster = {
     test.equal(actual, '{"test/fixtures/testing":"fa6a5a3224d7da66d9e0bdec25f62cf0"}', 'no_dest complete handler in Gruntfile.js should have written tmp/no_dest_result');
 
     test.done();
+  },
+  international: function(test) {
+    var actual = grunt.file.read('tmp/international');
+    var expected = grunt.file.read('test/expected/international');
+    test.equal(actual, expected, 'Should generate a json file for international content');
+
+    test.done();
   }
 
 };
