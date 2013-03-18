@@ -50,6 +50,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('cachebuster', 'Generates a file containing file hashes.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
+      encoding: 'utf8',
       format: 'json',
       banner: ''
     });
@@ -72,7 +73,7 @@ module.exports = function(grunt) {
           var source = grunt.file.read(filename);
           var hash = crypto.
             createHash('md5').
-            update(source).
+            update(source, options.encoding).
             digest('hex');
 
           var key = filename;

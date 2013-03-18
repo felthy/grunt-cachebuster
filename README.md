@@ -40,6 +40,12 @@ grunt.initConfig({
 
 ### Options
 
+#### options.encoding
+Type: `String`
+Default value: `'utf8'`
+
+The file encoding of the source files.
+
 #### options.format
 Type: `String`
 Default value: `'json'`
