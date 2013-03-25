@@ -40,41 +40,20 @@ grunt.initConfig({
 
 ### Options
 
-#### options.encoding
+#### options.banner
 Type: `String`
-Default value: `'utf8'`
+Default value: `''`
 
-The file encoding of the source files.
+If specified, this text is inserted at the top of the generated file. Take care that the banner will be valid in the
+chosen file format - e.g. if options.format is `'json'` then banner should be a javascript comment, and in that case
+only if your json parser supports comments; if options.format is `'php'`, then the banner will be inserted *after* the
+`<?php` line and the banner should be specified as a valid php code or comment(s).
 
-#### options.format
-Type: `String`
-Default value: `'json'`
-Supported values: `'json'`, `'php'`
-
-Specifies in which format the destination file will be generated.
-
-#### options.formatter
-Type: `Function`
-Default value: none
-
-If `options.formatter` is specified, then `options.format` will be ignored and the specified function will be called
-instead to generate the contents of the destination file.
-
-The function will be passed two arguments, `hashes` and `banner`, and is expected to return a string. The returned
-string will be written unmodified to the destination file.
-
-Function arguments:
-
-  * `hashes`: an object containing the MD5 hashes of all specified source files keyed by filename.
-  * `banner`: the banner string to be prepended to the output, or an empty string if no banner was configured.
-
-Example `hashes` parameter:
+You may use Grunt templates in the banner, for example:
 
 ```js
-    {
-      "path/to/filename1" : "fa6a5a3224d7da66d9e0bdec25f62cf0",
-      "path/to/filename2" : "5ba48b6e5a7c4d4930fda256f411e55b"
-    }
+    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+            '<%= grunt.template.today("yyyy-mm-dd") %> */'
 ```
 
 #### options.basedir
@@ -104,22 +83,6 @@ the resulting `target/cachebusters.json` would be:
 
 ```js
 {"filename1":"fa6a5a3224d7da66d9e0bdec25f62cf0","folder1/filename2":"5ba48b6e5a7c4d4930fda256f411e55b"}
-```
-
-#### options.banner
-Type: `String`
-Default value: `''`
-
-If specified, this text is inserted at the top of the generated file. Take care that the banner will be valid in the
-chosen file format - e.g. if options.format is `'json'` then banner should be a javascript comment, and in that case
-only if your json parser supports comments; if options.format is `'php'`, then the banner will be inserted *after* the
-`<?php` line and the banner should be specified as a valid php code or comment(s).
-
-You may use Grunt templates in the banner, for example:
-
-```js
-    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-            '<%= grunt.template.today("yyyy-mm-dd") %> */'
 ```
 
 #### options.complete
@@ -173,6 +136,43 @@ return array(
 		'crossdomain.xml' => '625e6c239ea0b5504ce0641b74ec2a3b',
 	)
 );
+```
+
+#### options.encoding
+Type: `String`
+Default value: `'utf8'`
+
+The file encoding of the source files.
+
+#### options.format
+Type: `String`
+Default value: `'json'`
+Supported values: `'json'`, `'php'`
+
+Specifies in which format the destination file will be generated.
+
+#### options.formatter
+Type: `Function`
+Default value: none
+
+If `options.formatter` is specified, then `options.format` will be ignored and the specified function will be called
+instead to generate the contents of the destination file.
+
+The function will be passed two arguments, `hashes` and `banner`, and is expected to return a string. The returned
+string will be written unmodified to the destination file.
+
+Function arguments:
+
+  * `hashes`: an object containing the MD5 hashes of all specified source files keyed by filename.
+  * `banner`: the banner string to be prepended to the output, or an empty string if no banner was configured.
+
+Example `hashes` parameter:
+
+```js
+    {
+      "path/to/filename1" : "fa6a5a3224d7da66d9e0bdec25f62cf0",
+      "path/to/filename2" : "5ba48b6e5a7c4d4930fda256f411e55b"
+    }
 ```
 
 
