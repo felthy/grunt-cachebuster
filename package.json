@@ -1,7 +1,7 @@
 {
   "name": "grunt-cachebuster",
   "description": "Generates a file containing file hashes",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/felthy/grunt-cachebuster",
   "author": {
     "name": "Pete Feltham",
