@@ -67,6 +67,13 @@ exports.cachebuster = {
     test.equal(actual, expected, 'Should generate a json file for international content');
 
     test.done();
+  },
+  directories: function(test) {
+    var actual = grunt.file.read('tmp/directories.php');
+    var expected = grunt.file.read('test/expected/directories.php');
+    test.equal(actual, expected, 'Should generate a json file for content containing directories');
+
+    test.done();
   }
 
 };

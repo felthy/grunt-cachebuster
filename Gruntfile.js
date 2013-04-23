@@ -65,7 +65,7 @@ module.exports = function(grunt) {
             return output;
           }
         },
-        src: 'test/fixtures/**/*',
+        src: 'test/fixtures/*',
         dest: 'tmp/custom_formatter.csv'
       },
       custom_php: {
@@ -98,6 +98,14 @@ module.exports = function(grunt) {
           }
         },
         src: ['test/fixtures/international']
+      },
+      directories: {
+        options: {
+          format: 'php',
+          basedir: 'test/fixtures/'
+        },
+        src: ['test/fixtures/**/*'],
+        dest: 'tmp/directories.php'
       }
     },
 

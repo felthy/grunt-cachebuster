@@ -69,21 +69,22 @@ module.exports = function(grunt) {
       // Concat specified files.
       f.src.forEach(function(filename) {
         if (grunt.file.exists(filename)) {
-          var source = grunt.file.read(filename, {
-            encoding: null
-          });
-          var hash = crypto.
-            createHash('md5').
-            update(source).
-            digest('hex');
+          if (!grunt.file.isDir(filename)) {
+            var source = grunt.file.read(filename, {
+              encoding: null
+            });
+            var hash = crypto.
+              createHash('md5').
+              update(source).
+              digest('hex');
 
-          var key = filename;
-          if (basedir) {
-            key = path.relative(basedir, filename);
+            var key = filename;
+            if (basedir) {
+              key = path.relative(basedir, filename);
+            }
+
+            hashes[key] = hash;
           }
-
-          hashes[key] = hash;
-
         } else {
           grunt.log.warn('Source file "' + filename + '" not found.');
           warnings = true;
