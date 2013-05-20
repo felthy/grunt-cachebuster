@@ -49,7 +49,8 @@ module.exports = function(grunt) {
         options: {
           banner: '<%= meta.custom_banner %>',
           format: 'php',
-          basedir: 'test/fixtures/'
+          basedir: 'test/fixtures/',
+          length: 8
         },
         src: ['test/fixtures/testing', 'test/fixtures/123'],
         dest: 'tmp/custom_options'

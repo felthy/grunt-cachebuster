@@ -85,6 +85,12 @@ the resulting `target/cachebusters.json` would be:
 {"filename1":"fa6a5a3224d7da66d9e0bdec25f62cf0","folder1/filename2":"5ba48b6e5a7c4d4930fda256f411e55b"}
 ```
 
+#### options.length
+Type: `Number`
+Default value: `32`
+
+If specified, the md5 hash will be truncated to the value of `length`.
+
 #### options.complete
 Type: `Function`
 Default value: none

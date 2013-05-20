@@ -51,7 +51,8 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       format: 'json',
-      banner: ''
+      banner: '',
+      length: 32
     });
     options.formatter = options.formatter || formatters[options.format];
 
@@ -76,7 +77,8 @@ module.exports = function(grunt) {
             var hash = crypto.
               createHash('md5').
               update(source).
-              digest('hex');
+              digest('hex').
+              slice(0, options.length);
 
             var key = filename;
             if (basedir) {
