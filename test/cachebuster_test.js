@@ -74,6 +74,13 @@ exports.cachebuster = {
     test.equal(actual, expected, 'Should generate a json file for content containing directories');
 
     test.done();
+  },
+  hash_length: function(test) {
+    var actual = grunt.file.read('tmp/hash_length');
+    var expected = grunt.file.read('test/expected/hash_length');
+    test.equal(actual, expected, 'Should generate a php file without a banner and with md5 hashes truncated to 8 characters');
+
+    test.done();
   }
 
 };

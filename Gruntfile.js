@@ -49,8 +49,7 @@ module.exports = function(grunt) {
         options: {
           banner: '<%= meta.custom_banner %>',
           format: 'php',
-          basedir: 'test/fixtures/',
-          length: 8
+          basedir: 'test/fixtures/'
         },
         src: ['test/fixtures/testing', 'test/fixtures/123'],
         dest: 'tmp/custom_options'
@@ -107,6 +106,15 @@ module.exports = function(grunt) {
         },
         src: ['test/fixtures/**/*'],
         dest: 'tmp/directories.php'
+      },
+      hash_length: {
+          options: {
+              format: 'php',
+              basedir: 'test/fixtures/',
+              length: 8
+          },
+          src: ['test/fixtures/testing', 'test/fixtures/123'],
+          dest: 'tmp/hash_length'
       }
     },
 

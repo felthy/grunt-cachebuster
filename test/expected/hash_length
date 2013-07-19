@@ -1,0 +1,6 @@
+<?php
+
+return array(
+	'123' => '5ba48b6e',
+	'testing' => 'fa6a5a32',
+);
