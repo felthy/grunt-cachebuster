@@ -52,6 +52,7 @@ module.exports = function(grunt) {
     var options = this.options({
       format: 'json',
       banner: '',
+      includeDirs: false,
       length: 32
     });
     options.formatter = options.formatter || formatters[options.format];
@@ -66,26 +67,48 @@ module.exports = function(grunt) {
     this.files.forEach(function(f) {
       grunt.log.write('Generating cachebuster file "' + f.dest + '"...');
       var warnings = false;
+      var hashes_cache = {};
       var hashes = {};
-      // Concat specified files.
-      f.src.forEach(function(filename) {
-        if (grunt.file.exists(filename)) {
-          if (!grunt.file.isDir(filename)) {
+
+      function makeKey(filename) {
+          return (basedir) ? path.relative(basedir, filename) : filename;
+      }
+
+      function doHash(data) {
+          return crypto.
+            createHash('md5').
+            update(data).
+            digest('hex').
+            slice(0, options.length);
+      }
+
+      function getOrCompute(filename) {
+        var key = makeKey(filename);
+
+        if (!(key in hashes_cache)) {
+          if (grunt.file.isDir(filename)) {
+            var child_hashes = [];
+            grunt.file.recurse(filename, function (abspath, rootdir, subdir, filename) {
+              child_hashes.push(getOrCompute(abspath));
+            });
+            hashes_cache[key] = doHash(child_hashes.join(''));
+          } else {
             var source = grunt.file.read(filename, {
               encoding: null
             });
-            var hash = crypto.
-              createHash('md5').
-              update(source).
-              digest('hex').
-              slice(0, options.length);
+            hashes_cache[key] = doHash(source);
+          }
+        }
+        return hashes_cache[key];
+      }
 
-            var key = filename;
-            if (basedir) {
-              key = path.relative(basedir, filename);
-            }
+      // Concat specified files.
+      f.src.forEach(function(filename) {
+        if (grunt.file.exists(filename)) {
+          var key = makeKey(filename);
 
-            hashes[key] = hash;
+          if (!grunt.file.isDir(filename) || options.includeDirs) {
+            hashes[key] = getOrCompute(filename);
           }
         } else {
           grunt.log.warn('Source file "' + filename + '" not found.');
