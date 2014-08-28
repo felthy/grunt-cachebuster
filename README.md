@@ -85,6 +85,14 @@ the resulting `target/cachebusters.json` would be:
 {"filename1":"fa6a5a3224d7da66d9e0bdec25f62cf0","folder1/filename2":"5ba48b6e5a7c4d4930fda256f411e55b"}
 ```
 
+#### options.includeDirs
+Type: `Boolean`
+Default value: `false`
+
+If set to `true`, hashes will be generated for each directory in the file list, rather than just the files. This can
+be useful if you just want a single hash used for a whole set of resources and avoids the output file ballooning in
+size.
+
 #### options.length
 Type: `Number`
 Default value: `32`
