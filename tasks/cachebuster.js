@@ -52,7 +52,7 @@ module.exports = function(grunt) {
     var options = this.options({
       format: 'json',
       banner: '',
-      length: 32
+      hash: 'md5'
     });
     options.formatter = options.formatter || formatters[options.format];
 
@@ -74,10 +74,15 @@ module.exports = function(grunt) {
             var source = grunt.file.read(filename, {
               encoding: null
             });
-            var hash = crypto.
-              createHash('md5').
-              update(source).
-              digest('hex').
+            var fn = typeof options.hash === 'function' ?
+              options.hash :
+              function (source) {
+                return crypto.
+                  createHash(options.hash).
+                  update(source).
+                  digest('hex');
+              };
+            var hash = fn.call(self, source).
               slice(0, options.length);
 
             var key = filename;

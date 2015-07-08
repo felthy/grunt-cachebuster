@@ -81,6 +81,19 @@ exports.cachebuster = {
     test.equal(actual, expected, 'Should generate a php file without a banner and with md5 hashes truncated to 8 characters');
 
     test.done();
-  }
+  },
+  custom_hash: function(test) {
+    var actual = grunt.file.read('tmp/custom_hash');
+    var expected = grunt.file.read('test/expected/custom_hash');
+    test.equal(actual, expected, 'Should generate sha512 hashes');
 
+    test.done();
+  },
+  custom_hashfunc: function(test) {
+    var actual = grunt.file.read('tmp/custom_hashfunc');
+    var expected = grunt.file.read('test/expected/custom_hashfunc');
+    test.equal(actual, expected, 'Should generate custom hashfunc');
+
+    test.done();
+  }
 };

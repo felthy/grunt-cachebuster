@@ -115,6 +115,25 @@ module.exports = function(grunt) {
           },
           src: ['test/fixtures/testing', 'test/fixtures/123'],
           dest: 'tmp/hash_length'
+      },
+      custom_hash: {
+          options: {
+              hash: 'sha512',
+              basedir: 'test/fixtures/',
+          },
+          src: ['test/fixtures/testing', 'test/fixtures/123'],
+          dest: 'tmp/custom_hash'
+      },
+      custom_hashfunc: {
+          options: {
+              hash: function (buf) {
+                  return buf.toString();
+              },
+              length: 256,
+              basedir: 'test/fixtures/',
+          },
+          src: ['test/fixtures/testing', 'test/fixtures/123'],
+          dest: 'tmp/custom_hashfunc'
       }
     },
 
