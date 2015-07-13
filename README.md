@@ -85,11 +85,19 @@ the resulting `target/cachebusters.json` would be:
 {"filename1":"fa6a5a3224d7da66d9e0bdec25f62cf0","folder1/filename2":"5ba48b6e5a7c4d4930fda256f411e55b"}
 ```
 
+### options.hash
+Type: `Function|String`
+Default value: `md5`
+
+If specified it will generate a hash of the specific algorithms supported by `crypto.createHash()`. By passing a
+function you can implement your own hash function. The passed function will receive the buffer of the file to be
+hashed.
+
 #### options.length
 Type: `Number`
-Default value: `32`
+Default value: no length, default length of the hash function
 
-If specified, the md5 hash will be truncated to the value of `length`.
+If specified, the hash will be truncated to the value of `length`.
 
 #### options.complete
 Type: `Function`
