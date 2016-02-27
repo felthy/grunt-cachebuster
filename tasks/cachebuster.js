@@ -52,7 +52,8 @@ module.exports = function(grunt) {
     var options = this.options({
       format: 'json',
       banner: '',
-      hash: 'md5'
+      hash: 'md5',
+      includeDirs: false
     });
     options.formatter = options.formatter || formatters[options.format];
 
@@ -66,14 +67,14 @@ module.exports = function(grunt) {
     this.files.forEach(function(f) {
       grunt.log.write('Generating cachebuster file "' + f.dest + '"...');
       var warnings = false;
+      var hashes_cache = {};
       var hashes = {};
-      // Concat specified files.
-      f.src.forEach(function(filename) {
-        if (grunt.file.exists(filename)) {
-          if (!grunt.file.isDir(filename)) {
-            var source = grunt.file.read(filename, {
-              encoding: null
-            });
+
+      function makeKey(filename) {
+          return (basedir) ? path.relative(basedir, filename) : filename;
+      }
+
+      function doHash(data) {
             var fn = typeof options.hash === 'function' ?
               options.hash :
               function (source) {
@@ -82,15 +83,37 @@ module.exports = function(grunt) {
                   update(source).
                   digest('hex');
               };
-            var hash = fn.call(self, source).
+            return fn.call(self, data).
               slice(0, options.length);
+      }
 
-            var key = filename;
-            if (basedir) {
-              key = path.relative(basedir, filename);
-            }
+      function getOrCompute(filename) {
+        var key = makeKey(filename);
 
-            hashes[key] = hash;
+        if (!(key in hashes_cache)) {
+          if (grunt.file.isDir(filename)) {
+            var child_hashes = [];
+            grunt.file.recurse(filename, function (abspath, rootdir, subdir, filename) {
+              child_hashes.push(getOrCompute(abspath));
+            });
+            hashes_cache[key] = doHash(child_hashes.join(''));
+          } else {
+            var source = grunt.file.read(filename, {
+              encoding: null
+            });
+            hashes_cache[key] = doHash(source);
+          }
+        }
+        return hashes_cache[key];
+      }
+
+      // Concat specified files.
+      f.src.forEach(function(filename) {
+        if (grunt.file.exists(filename)) {
+          var key = makeKey(filename);
+
+          if (!grunt.file.isDir(filename) || options.includeDirs) {
+            hashes[key] = getOrCompute(filename);
           }
         } else {
           grunt.log.warn('Source file "' + filename + '" not found.');

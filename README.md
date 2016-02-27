@@ -93,6 +93,14 @@ If specified it will generate a hash of the specific algorithms supported by `cr
 function you can implement your own hash function. The passed function will receive the buffer of the file to be
 hashed.
 
+#### options.includeDirs
+Type: `Boolean`
+Default value: `false`
+
+If set to `true`, hashes will be generated for each directory in the file list, rather than just the files. This can
+be useful if you just want a single hash used for a whole set of resources and avoids the output file ballooning in
+size.
+
 #### options.length
 Type: `Number`
 Default value: no length, default length of the hash function

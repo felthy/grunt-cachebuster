@@ -134,6 +134,13 @@ module.exports = function(grunt) {
           },
           src: ['test/fixtures/testing', 'test/fixtures/123'],
           dest: 'tmp/custom_hashfunc'
+      },
+      include_dirs: {
+        options: {
+          includeDirs: true
+        },
+        src: ['test/fixtures/*'],
+        dest: 'tmp/include_dirs'
       }
     },
 
