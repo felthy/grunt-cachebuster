@@ -81,6 +81,13 @@ exports.cachebuster = {
     test.equal(actual, expected, 'Should generate a php file without a banner and with md5 hashes truncated to 8 characters');
 
     test.done();
+  },
+  include_dirs: function(test) {
+    var actual = grunt.file.read('tmp/include_dirs');
+    var expected = grunt.file.read('test/expected/include_dirs');
+    test.equal(actual, expected, 'Should generate a json file containing hashes of the files AND directories under fixtures/, but not hashes for files inside nested directories');
+
+    test.done();
   }
 
 };
